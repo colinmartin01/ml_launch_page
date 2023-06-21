@@ -15,6 +15,23 @@
 }
 */
 
+.splitScreen {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+.topPane {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.bottomPane {
+  grid-column: 2;
+  grid-row: 1;
+}
+
 .Logo-header {
   background-color: #dee0f8;
   display: flex;
@@ -32,8 +49,18 @@
   color: rgb(0, 0, 0);
 }
 
-.App-body {
+.App-body-links {
   background-color: #dee0f8;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: calc(10px + 2vmin);
+  color: rgb(0, 0, 0);
+}
+
+.App-body-s3 {
+  background-color: #f0f8de;
   min-height: 70vh;
   display: flex;
   flex-direction: column;

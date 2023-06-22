@@ -36,7 +36,7 @@
   background-color: #dee0f8;
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .App-header {
@@ -59,7 +59,7 @@
   color: rgb(0, 0, 0);
 }
 
-.App-body-s3 {
+.App-body-data {
   background-color: #f0f8de;
   min-height: 70vh;
   display: flex;

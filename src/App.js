@@ -13,7 +13,7 @@ function LogoHeader() {
 
 function AppHeader() {
   return (
-    <header className="App-header">
+    <header className="App-body header">
       <h1>
         Machine Learning Safety Stock Model
       </h1>
@@ -31,10 +31,10 @@ function AppHeader() {
 
 function AppBodyLinks() {
   return (
-    <body className="App-body-links">
-      <p>
+    <body className="App-body links">
+      <h3>
         Important Links
-      </p>
+      </h3>
       <a
         className="App-link"
         href="https://appsassc.us-east-1.snowflakecomputing.com/console/login#/?returnUrl=internal%2Fworksheet"
@@ -76,18 +76,18 @@ function AppBodyLinks() {
 
 function AppBodyData({ s3OnClick, datagenOnClick }) {
   return (
-    <body className="App-body-data">
-      <p>
+    <body className="App-body data">
+      <h3>
         Enter Your Data or Request Python DataGen
-      </p>
+      </h3>
       <div className="splitScreen">
         <div className="topPane">
-          <button onClick={s3OnClick}>
+          <button className="button" onClick={s3OnClick}>
             Upload your data
           </button>
         </div>
         <div className="bottomPane">
-          <button onClick={datagenOnClick}>
+          <button className="button datagen" onClick={datagenOnClick}>
             Use Apps Associates Python DataGen
           </button>
         </div>
@@ -98,11 +98,11 @@ function AppBodyData({ s3OnClick, datagenOnClick }) {
 
 function AppBodyS3( {onClick} ) {
   return (
-    <body className="App-body-data">
-      <p>
+    <body className="App-body data">
+      <h3>
         This is S3
-      </p>
-      <button onClick={onClick}>
+      </h3>
+      <button className="button" onClick={onClick}>
         Back
       </button>
     </body>
@@ -111,11 +111,11 @@ function AppBodyS3( {onClick} ) {
 
 function AppBodyDatagen( {onClick} ) {
   return (
-    <body className="App-body-data">
-      <p>
+    <body className="App-body data">
+      <h3>
         This is DataGen
-      </p>
-      <button onClick={onClick}>
+      </h3>
+      <button className="button datagen" onClick={onClick}>
         Back
       </button>
     </body>

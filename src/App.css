@@ -2,8 +2,13 @@
   text-align: center;
 }
 
+.App-link {
+  color: #2300ae;
+}
+
 .App-logo {
-  height: 10vmin;
+  height: 7vmin;
+  background-color: white;
   pointer-events: none;
 }
 
@@ -16,7 +21,7 @@
 */
 
 .splitScreen {
-  height: 100vh;
+  min-height: 50vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
@@ -33,24 +38,37 @@
 }
 
 .Logo-header {
-  background-color: #dee0f8;
+  background-color: #3a3c4f;
+  min-height: 9vh;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
 }
 
-.App-header {
-  background-color: #dee0f8;
-  min-height: 30vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: calc(10px + 2vmin);
-  color: rgb(0, 0, 0);
+/* button parent style */
+.button {
+  background-color: #606dfa;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
 
-.App-body-links {
-  background-color: #dee0f8;
+/* button children */
+
+.datagen {
+  background-color: #ffd500;
+}
+
+/* App-body parent style */
+
+.App-body {
   min-height: 70vh;
   display: flex;
   flex-direction: column;
@@ -59,18 +77,22 @@
   color: rgb(0, 0, 0);
 }
 
-.App-body-data {
-  background-color: #f0f8de;
-  min-height: 70vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: calc(10px + 2vmin);
-  color: rgb(0, 0, 0);
+/* App-body children */
+
+.header {
+  background: url("launch_page_background.png");
+  background-size: contain;
+  /*background-color: #dee0f8;*/
+  min-height: 25vh;
 }
 
-.App-link {
-  color: #2300ae;
+.links {
+  background-color: #dee0f8;
+}
+
+.data {
+  background-color: #d5d9ff;
+  /*background-color: #f0f8de;*/
 }
 
 /*

@@ -96,7 +96,36 @@ function AppBodyData({ s3OnClick, datagenOnClick }) {
   )
 }
 
-function AppBodyS3( {onClick} ) {
+function AppBodyS3( { onClick } ) {
+  const [selectedFile, setSelectedFile] = useState();
+	const [isFilePicked, setIsFilePicked] = useState(false);
+
+  const handleFile = (event) => {
+		setSelectedFile(event.target.files[0]);
+		setIsFilePicked(true);
+	};
+
+	const handleSubmit = () => {
+		const formData = new FormData();
+
+		formData.append('File', selectedFile);
+
+		fetch(
+			'https://freeimage.host/api/1/upload?key=<YOUR_API_KEY>',
+			{
+				method: 'POST',
+				body: formData,
+			}
+		)
+			.then((response) => response.json())
+			.then((result) => {
+				console.log('Success:', result);
+			})
+			.catch((error) => {
+				console.error('Error:', error);
+			});
+	};
+
   return (
     <body className="App-body data">
       <h3>
@@ -105,11 +134,28 @@ function AppBodyS3( {onClick} ) {
       <button className="button" onClick={onClick}>
         Back
       </button>
+      <input className="button" type="file" name="file" onChange={handleFile} />
+      {isFilePicked ? (
+				<div>
+					<p className="fileInfo">Filename: {selectedFile.name}</p>
+					<p className="fileInfo">Filetype: {selectedFile.type}</p>
+					<p className="fileInfo">Size in bytes: {selectedFile.size}</p>
+					<p className="fileInfo">
+						lastModifiedDate:{' '}
+						{selectedFile.lastModifiedDate.toLocaleDateString()}
+					</p>
+				</div>
+			) : (
+				<p>Select a file to show details</p>
+			)}
+      <div>
+        <button className="button" onClick={handleSubmit}>Submit</button>
+      </div>
     </body>
   )
 }
 
-function AppBodyDatagen( {onClick} ) {
+function AppBodyDatagen( { onClick } ) {
   return (
     <body className="App-body data">
       <h3>

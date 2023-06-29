@@ -20,6 +20,10 @@
 }
 */
 
+.fileInfo {
+  font-size: small;
+}
+
 .splitScreen {
   min-height: 50vh;
   display: grid;

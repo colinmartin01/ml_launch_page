@@ -102,7 +102,7 @@ function AppBodyS3( { onClick } ) {
 
   const handleFile = (event) => {
 		setSelectedFile(event.target.files[0]);
-		setIsFilePicked(true);
+    setIsFilePicked(true)
 	};
 
 	const handleSubmit = () => {
@@ -129,24 +129,28 @@ function AppBodyS3( { onClick } ) {
   return (
     <body className="App-body data">
       <h3>
+        <button className="button back" onClick={onClick}>
+        Back
+        </button>
         This is S3
       </h3>
-      <button className="button" onClick={onClick}>
-        Back
-      </button>
       <input className="button" type="file" name="file" onChange={handleFile} />
       {isFilePicked ? (
-				<div>
-					<p className="fileInfo">Filename: {selectedFile.name}</p>
-					<p className="fileInfo">Filetype: {selectedFile.type}</p>
-					<p className="fileInfo">Size in bytes: {selectedFile.size}</p>
-					<p className="fileInfo">
-						lastModifiedDate:{' '}
-						{selectedFile.lastModifiedDate.toLocaleDateString()}
-					</p>
-				</div>
+        selectedFile.name.split('.').pop() == "csv" || selectedFile.name.split('.').pop() == "xlsx" ? (
+          <div>
+            <p className="fileInfo">Filename: {selectedFile.name}</p>
+            <p className="fileInfo">Filetype: {selectedFile.type}</p>
+            <p className="fileInfo">Size in bytes: {selectedFile.size}</p>
+            <p className="fileInfo">
+              lastModifiedDate:{' '}
+              {selectedFile.lastModifiedDate.toLocaleDateString()}
+            </p>
+          </div>
+        ) : (
+          <p>Error: incorrect file type, please submit a .xlsx or .csv file</p>
+        )
 			) : (
-				<p>Select a file to show details</p>
+				<p>Select a csv or excel file to show details</p>
 			)}
       <div>
         <button className="button" onClick={handleSubmit}>Submit</button>
@@ -159,11 +163,11 @@ function AppBodyDatagen( { onClick } ) {
   return (
     <body className="App-body data">
       <h3>
+        <button className="button datagen back" onClick={onClick}>
+          Back
+        </button>
         This is DataGen
       </h3>
-      <button className="button datagen" onClick={onClick}>
-        Back
-      </button>
     </body>
   )
 }

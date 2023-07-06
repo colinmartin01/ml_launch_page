@@ -1,7 +1,8 @@
 //import logo from './logo.svg';
 import apps_logo from './apps_logo.png';
 import './App.css';
-import {useState} from "react";
+import { useState } from "react";
+import { Storage } from "@aws-amplify/storage";
 
 function LogoHeader() {
   return (
@@ -107,7 +108,11 @@ function AppBodyS3( { onClick } ) {
 
   async function handleSubmit(e) {
     try {
-      await Storage.put(selectedFile.name, selectedFile)
+      await Storage.put(selectedFile.name, selectedFile, {
+        progressCallback(progress) {
+          console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
+        }
+      })
       setIsFilePicked(false)
     } catch (error) {
       console.log("Error uploading file: ", error);

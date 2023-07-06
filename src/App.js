@@ -104,6 +104,7 @@ function AppBodyS3( { onClick } ) {
 		setSelectedFile(event.target.files[0]);
     setIsFilePicked(true)
 	};
+  
 
 	const handleSubmit = () => {
 		const formData = new FormData();
@@ -124,7 +125,7 @@ function AppBodyS3( { onClick } ) {
 			.catch((error) => {
 				console.error('Error:', error);
 			});
-	};
+    }
 
   return (
     <body className="App-body data">
@@ -145,16 +146,15 @@ function AppBodyS3( { onClick } ) {
               lastModifiedDate:{' '}
               {selectedFile.lastModifiedDate.toLocaleDateString()}
             </p>
+            <button className="button" onClick={handleSubmit}>Submit</button>
           </div>
+          
         ) : (
           <p>Error: incorrect file type, please submit a .xlsx or .csv file</p>
         )
 			) : (
-				<p>Select a csv or excel file to show details</p>
+				<p>Select a csv or excel file for upload to SageMaker</p>
 			)}
-      <div>
-        <button className="button" onClick={handleSubmit}>Submit</button>
-      </div>
     </body>
   )
 }

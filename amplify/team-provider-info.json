@@ -35,6 +35,9 @@
       },
       "api": {
         "mllaunchpage": {}
+      },
+      "storage": {
+        "s3a122f770": {}
       }
     }
   }

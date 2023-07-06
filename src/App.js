@@ -105,7 +105,7 @@ function AppBodyS3( { onClick } ) {
     setIsFilePicked(true)
 	};
   
-
+/*
 	const handleSubmit = () => {
 		const formData = new FormData();
 
@@ -126,6 +126,15 @@ function AppBodyS3( { onClick } ) {
 				console.error('Error:', error);
 			});
     }
+*/
+
+  async function handleSubmit(e) {
+    try {
+      await Storage.put(selectedFile.name, selectedFile)
+    } catch (error) {
+      console.log("Error uploading file: ", error);
+    }
+  }
 
   return (
     <body className="App-body data">

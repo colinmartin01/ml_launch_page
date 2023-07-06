@@ -104,33 +104,11 @@ function AppBodyS3( { onClick } ) {
 		setSelectedFile(event.target.files[0]);
     setIsFilePicked(true)
 	};
-  
-/*
-	const handleSubmit = () => {
-		const formData = new FormData();
-
-		formData.append('File', selectedFile);
-
-		fetch(
-			'https://freeimage.host/api/1/upload?key=<YOUR_API_KEY>',
-			{
-				method: 'POST',
-				body: formData,
-			}
-		)
-			.then((response) => response.json())
-			.then((result) => {
-				console.log('Success:', result);
-			})
-			.catch((error) => {
-				console.error('Error:', error);
-			});
-    }
-*/
 
   async function handleSubmit(e) {
     try {
       await Storage.put(selectedFile.name, selectedFile)
+      setIsFilePicked(false)
     } catch (error) {
       console.log("Error uploading file: ", error);
     }
@@ -157,7 +135,6 @@ function AppBodyS3( { onClick } ) {
             </p>
             <button className="button" onClick={handleSubmit}>Submit</button>
           </div>
-          
         ) : (
           <p>Error: incorrect file type, please submit a .xlsx or .csv file</p>
         )

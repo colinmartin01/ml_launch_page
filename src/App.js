@@ -4,11 +4,13 @@ import './App.css';
 import { useState } from "react";
 import { Storage } from "@aws-amplify/storage";
 
+// Global link defaults
 var defSnowflakeLink = "https://appsassc.us-east-1.snowflakecomputing.com/console/login#/?returnUrl=internal%2Fworksheet"
 var defPreprocessingLink = "https://us-west-2.console.aws.amazon.com/sagemaker/home?region=us-west-2#/landing"
 var defStudioLink = "https://d-n44eyyqq6wfk.studio.us-west-2.sagemaker.aws/jupyter/default/"
 var defCanvasLink = "https://d-n44eyyqq6wfk.studio.us-west-2.sagemaker.aws/canvas/default/models"
 
+// Header featuring the Apps Associates Logo 
 function LogoHeader() {
   return (
     <header className="Logo-header">
@@ -17,6 +19,7 @@ function LogoHeader() {
   )
 }
 
+// Sub-header featuring the website title and link to Apps website
 function AppHeader() {
   return (
     <header className="App-body header">
@@ -35,6 +38,8 @@ function AppHeader() {
   )
 }
 
+// Left pane of the split-screened app body
+// Displays links to Safety Stock ML pages and a "Configure Links" button, sending the user to the links config page
 function AppBodyLinks({ onClick, snowflakeLink, preprocessingLink, studioLink, canvasLink}) {
   return (
     <body className="App-body links">
@@ -83,11 +88,13 @@ function AppBodyLinks({ onClick, snowflakeLink, preprocessingLink, studioLink, c
   )
 }
 
+// Links configuration page, the flip side of the links page on the left pane of the split screen
 function AppBodyConfig({ onClick, snowflakeLink, setSnowflakeLink, 
                                   preprocessingLink, setPreprocessingLink, 
                                   studioLink, setStudioLink, 
                                   canvasLink, setCanvasLink }) {
   
+  // Set new links upon submission of input form
   function handleSubmit(e) {
     // Prevent the browser from reloading the page
     e.preventDefault();
@@ -96,13 +103,18 @@ function AppBodyConfig({ onClick, snowflakeLink, setSnowflakeLink,
     const form = e.target;
     const formData = new FormData(form);
 
+    // Get input data from JSON object
     const formJson = Object.fromEntries(formData.entries());
+
+    // Set links to input
     setSnowflakeLink(formJson["Snowflake"])
     setPreprocessingLink(formJson["Pre-Processing"])
     setStudioLink(formJson["Studio"])
     setCanvasLink(formJson["Canvas"])
   }
   
+  // Reset links to global defaults
+  // **NOTE** Must return to "Important Links" page with the "Back" button for changes to take effect
   function resetDefaults() {
     setSnowflakeLink(defSnowflakeLink)
     setPreprocessingLink(defPreprocessingLink)
@@ -149,6 +161,8 @@ function AppBodyConfig({ onClick, snowflakeLink, setSnowflakeLink,
   )
 }
 
+// Right pane of the split-screened app body
+// Gives user the option to make use of Apps Associates Python DataGen or upload their own data
 function AppBodyData({ s3OnClick, datagenOnClick }) {
   return (
     <body className="App-body data">
@@ -171,16 +185,21 @@ function AppBodyData({ s3OnClick, datagenOnClick }) {
   )
 }
 
+// The S3 flip-side of the right pane of the split screen
+// Manages file submission, requiring a .csv or .xlsx file before allowing user to submit
+// Submission is sent to the S3 bucket associated with the corresponding Apps Amplify project
 function AppBodyS3( { onClick } ) {
   const [selectedFile, setSelectedFile] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  // When file picked, set selected file and notify that file has been picked
   const handleFile = (event) => {
 		setSelectedFile(event.target.files[0]);
     setIsFilePicked(true)
 	};
 
+  // On submission await upload to S3 bucket
   async function handleSubmit(e) {
     try {
       await Storage.put(selectedFile.name, selectedFile, {
@@ -227,6 +246,8 @@ function AppBodyS3( { onClick } ) {
   )
 }
 
+// The DataGen flip-side of the right pane of the split screen
+// Not currently in use (as of 7/10/2023)
 function AppBodyDatagen( { onClick } ) {
   return (
     <body className="App-body data">
@@ -240,6 +261,8 @@ function AppBodyDatagen( { onClick } ) {
   )
 }
 
+// Main file sets up link state variables, and state variables to handle what pages to display
+// Puts together the pages of the app 
 function App() {
   const [s3, setS3] = useState(false);
   const [datagen, setDatagen] = useState(false);

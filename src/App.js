@@ -3,12 +3,13 @@ import apps_logo from './apps_logo.png';
 import './App.css';
 import { useState } from "react";
 import { Storage } from "@aws-amplify/storage";
+import links from './links.json';
 
 // Global link defaults
-var defSnowflakeLink = "https://appsassc.us-east-1.snowflakecomputing.com/console/login#/?returnUrl=internal%2Fworksheet"
-var defPreprocessingLink = "https://us-west-2.console.aws.amazon.com/sagemaker/home?region=us-west-2#/landing"
-var defStudioLink = "https://d-n44eyyqq6wfk.studio.us-west-2.sagemaker.aws/jupyter/default/"
-var defCanvasLink = "https://d-n44eyyqq6wfk.studio.us-west-2.sagemaker.aws/canvas/default/models"
+var defaultSnowflakeLink = links["snowflake"]
+var defaultPreprocessingLink = links["preprocessing"]
+var defaultStudioLink = links["studio"]
+var defaultCanvasLink = links["canvas"]
 
 // Header featuring the Apps Associates Logo 
 function LogoHeader() {
@@ -106,6 +107,12 @@ function AppBodyConfig({ onClick, snowflakeLink, setSnowflakeLink,
     // Get input data from JSON object
     const formJson = Object.fromEntries(formData.entries());
 
+    // Set links to input in local storage
+    localStorage.setItem("snowflake", formJson["Snowflake"])
+    localStorage.setItem("preprocessing", formJson["Pre-Processing"])
+    localStorage.setItem("studio", formJson["Studio"])
+    localStorage.setItem("canvas", formJson["Canvas"])
+
     // Set links to input
     setSnowflakeLink(formJson["Snowflake"])
     setPreprocessingLink(formJson["Pre-Processing"])
@@ -116,10 +123,15 @@ function AppBodyConfig({ onClick, snowflakeLink, setSnowflakeLink,
   // Reset links to global defaults
   // **NOTE** Must return to "Important Links" page with the "Back" button for changes to take effect
   function resetDefaults() {
-    setSnowflakeLink(defSnowflakeLink)
-    setPreprocessingLink(defPreprocessingLink)
-    setStudioLink(defStudioLink)
-    setCanvasLink(defCanvasLink)
+    setSnowflakeLink(defaultSnowflakeLink)
+    setPreprocessingLink(defaultPreprocessingLink)
+    setStudioLink(defaultStudioLink)
+    setCanvasLink(defaultCanvasLink)
+
+    localStorage.setItem("snowflake", defaultSnowflakeLink)
+    localStorage.setItem("preprocessing", defaultPreprocessingLink)
+    localStorage.setItem("studio", defaultStudioLink)
+    localStorage.setItem("canvas", defaultCanvasLink)
   }
 
   return (
@@ -267,14 +279,11 @@ function App() {
   const [s3, setS3] = useState(false);
   const [datagen, setDatagen] = useState(false);
   const [config, setConfig] = useState(false);
-  const [snowflakeLink, setSnowflakeLink] = 
-        useState("https://appsassc.us-east-1.snowflakecomputing.com/console/login#/?returnUrl=internal%2Fworksheet")
-  const [preprocessingLink, setPreprocessingLink] = 
-        useState("https://us-west-2.console.aws.amazon.com/sagemaker/home?region=us-west-2#/landing")
-  const [studioLink, setStudioLink] = 
-        useState("https://d-n44eyyqq6wfk.studio.us-west-2.sagemaker.aws/jupyter/default/")
-  const [canvasLink, setCanvasLink] = 
-        useState("https://d-n44eyyqq6wfk.studio.us-west-2.sagemaker.aws/canvas/default/models")
+
+  const [snowflakeLink, setSnowflakeLink] = useState(localStorage.getItem("snowflake"))
+  const [preprocessingLink, setPreprocessingLink] = useState(localStorage.getItem("preprocessing"))
+  const [studioLink, setStudioLink] = useState(localStorage.getItem("studio"))
+  const [canvasLink, setCanvasLink] = useState(localStorage.getItem("preprocessing"))
 
   function handleS3() {
     setS3(current => !current)

@@ -1,0 +1,6 @@
+{
+    "snowflake": "https://appsassc.us-east-1.snowflakecomputing.com/console/login#/?returnUrl=internal%2Fworksheet",
+    "preprocessing" : "https://us-west-2.console.aws.amazon.com/sagemaker/home?region=us-west-2#/landing",
+    "studio": "https://d-n44eyyqq6wfk.studio.us-west-2.sagemaker.aws/jupyter/default/",
+    "canvas": "https://d-n44eyyqq6wfk.studio.us-west-2.sagemaker.aws/canvas/default/models"
+}

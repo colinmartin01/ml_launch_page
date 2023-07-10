@@ -75,6 +75,10 @@
   text-align: left;
 }
 
+.config {
+  background-color: #9235e8;
+}
+
 /* App-body parent style */
 
 .App-body {

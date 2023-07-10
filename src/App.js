@@ -4,6 +4,11 @@ import './App.css';
 import { useState } from "react";
 import { Storage } from "@aws-amplify/storage";
 
+var defSnowflakeLink = "https://appsassc.us-east-1.snowflakecomputing.com/console/login#/?returnUrl=internal%2Fworksheet"
+var defPreprocessingLink = "https://us-west-2.console.aws.amazon.com/sagemaker/home?region=us-west-2#/landing"
+var defStudioLink = "https://d-n44eyyqq6wfk.studio.us-west-2.sagemaker.aws/jupyter/default/"
+var defCanvasLink = "https://d-n44eyyqq6wfk.studio.us-west-2.sagemaker.aws/canvas/default/models"
+
 function LogoHeader() {
   return (
     <header className="Logo-header">
@@ -30,15 +35,18 @@ function AppHeader() {
   )
 }
 
-function AppBodyLinks() {
+function AppBodyLinks({ onClick, snowflakeLink, preprocessingLink, studioLink, canvasLink}) {
   return (
     <body className="App-body links">
       <h3>
+        <button className="button back config" onClick={onClick}>
+          Configure links
+        </button>
         Important Links
       </h3>
       <a
         className="App-link"
-        href="https://appsassc.us-east-1.snowflakecomputing.com/console/login#/?returnUrl=internal%2Fworksheet"
+        href={snowflakeLink}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -49,7 +57,7 @@ function AppBodyLinks() {
       </p>
       <a
         className="App-link"
-        href="https://aws.amazon.com/pm/sagemaker/"
+        href={preprocessingLink}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -57,7 +65,7 @@ function AppBodyLinks() {
       </a>
       <a
         className="App-link"
-        href="https://aws.amazon.com/pm/sagemaker/"
+        href={studioLink}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -65,12 +73,78 @@ function AppBodyLinks() {
       </a>
       <a
         className="App-link"
-        href="https://aws.amazon.com/pm/sagemaker/"
+        href={canvasLink}
         target="_blank"
         rel="noopener noreferrer"
       >
         Canvas
       </a>
+    </body>
+  )
+}
+
+function AppBodyConfig({ onClick, snowflakeLink, setSnowflakeLink, 
+                                  preprocessingLink, setPreprocessingLink, 
+                                  studioLink, setStudioLink, 
+                                  canvasLink, setCanvasLink }) {
+  
+  function handleSubmit(e) {
+    // Prevent the browser from reloading the page
+    e.preventDefault();
+
+    // Read the form data
+    const form = e.target;
+    const formData = new FormData(form);
+
+    const formJson = Object.fromEntries(formData.entries());
+    setSnowflakeLink(formJson["Snowflake"])
+    setPreprocessingLink(formJson["Pre-Processing"])
+    setStudioLink(formJson["Studio"])
+    setCanvasLink(formJson["Canvas"])
+  }
+  
+  function resetDefaults() {
+    setSnowflakeLink(defSnowflakeLink)
+    setPreprocessingLink(defPreprocessingLink)
+    setStudioLink(defStudioLink)
+    setCanvasLink(defCanvasLink)
+  }
+
+  return (
+    <body className="App-body links">
+      <h3>
+        <button className="button back config" onClick={onClick}>
+          Back
+        </button>
+        Configure Links
+      </h3>
+      <form method="post" onSubmit={handleSubmit}>
+        <label>
+          Snowflake Console: <input name="Snowflake" type="text" size="50" defaultValue={snowflakeLink}></input>
+        </label>
+        <p>
+          SageMaker
+        </p>
+        <div>
+          <label>
+            Pre-Processing: <input name="Pre-Processing" type="text" size="50" defaultValue={preprocessingLink}></input>
+          </label>
+        </div>
+        <div>
+          <label>
+            Studio: <input name="Studio" type="text" size="50" defaultValue={studioLink}></input>
+          </label>
+        </div>
+        <div>
+          <label>
+            Canvas: <input name="Canvas" type="text" size="50" defaultValue={canvasLink}></input>
+          </label>
+        </div>
+        <p>
+          <button className="button config" type="submit">Save Changes</button>
+          <button className="button config" type="button" onClick={resetDefaults}>Reset Defaults</button>
+        </p>
+      </form>
     </body>
   )
 }
@@ -100,6 +174,7 @@ function AppBodyData({ s3OnClick, datagenOnClick }) {
 function AppBodyS3( { onClick } ) {
   const [selectedFile, setSelectedFile] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleFile = (event) => {
 		setSelectedFile(event.target.files[0]);
@@ -113,7 +188,7 @@ function AppBodyS3( { onClick } ) {
           console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
         }
       })
-      setIsFilePicked(false)
+      setIsSubmitted(true)
     } catch (error) {
       console.log("Error uploading file: ", error);
     }
@@ -125,7 +200,7 @@ function AppBodyS3( { onClick } ) {
         <button className="button back" onClick={onClick}>
         Back
         </button>
-        This is S3
+        S3 Bucket Upload
       </h3>
       <input className="button" type="file" name="file" onChange={handleFile} />
       {isFilePicked ? (
@@ -143,9 +218,11 @@ function AppBodyS3( { onClick } ) {
         ) : (
           <p>Error: incorrect file type, please submit a .xlsx or .csv file</p>
         )
+			) : isSubmitted ? (
+				<p>Data upload success!</p>
 			) : (
-				<p>Select a csv or excel file for upload to SageMaker</p>
-			)}
+        <p>Select a csv or excel file for upload to SageMaker</p>
+      )}
     </body>
   )
 }
@@ -166,6 +243,15 @@ function AppBodyDatagen( { onClick } ) {
 function App() {
   const [s3, setS3] = useState(false);
   const [datagen, setDatagen] = useState(false);
+  const [config, setConfig] = useState(false);
+  const [snowflakeLink, setSnowflakeLink] = 
+        useState("https://appsassc.us-east-1.snowflakecomputing.com/console/login#/?returnUrl=internal%2Fworksheet")
+  const [preprocessingLink, setPreprocessingLink] = 
+        useState("https://us-west-2.console.aws.amazon.com/sagemaker/home?region=us-west-2#/landing")
+  const [studioLink, setStudioLink] = 
+        useState("https://d-n44eyyqq6wfk.studio.us-west-2.sagemaker.aws/jupyter/default/")
+  const [canvasLink, setCanvasLink] = 
+        useState("https://d-n44eyyqq6wfk.studio.us-west-2.sagemaker.aws/canvas/default/models")
 
   function handleS3() {
     setS3(current => !current)
@@ -173,6 +259,10 @@ function App() {
   
   function handleDatagen() {
     setDatagen(current => !current)
+  }
+
+  function handleConfig() {
+    setConfig(current => !current)
   }
 
   return (
@@ -185,7 +275,19 @@ function App() {
       <div className="splitScreen">
 
         <div className="topPane">
-          <AppBodyLinks />
+          {config ? (
+            <AppBodyConfig onClick={handleConfig} 
+                           snowflakeLink={snowflakeLink} setSnowflakeLink={setSnowflakeLink} 
+                           preprocessingLink={preprocessingLink} setPreprocessingLink={setPreprocessingLink}
+                           studioLink={studioLink} setStudioLink={setStudioLink}
+                           canvasLink={canvasLink} setCanvasLink={setCanvasLink}/>
+          ) : (
+            <AppBodyLinks onClick={handleConfig} 
+                          snowflakeLink={snowflakeLink} 
+                          preprocessingLink={preprocessingLink}
+                          studioLink={studioLink} 
+                          canvasLink={canvasLink} />
+          )}
         </div>
 
         <div className="bottomPane">

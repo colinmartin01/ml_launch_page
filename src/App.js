@@ -44,12 +44,14 @@ function AppHeader() {
 function AppBodyLinks({ onClick, snowflakeLink, preprocessingLink, studioLink, canvasLink}) {
   return (
     <body className="App-body links">
-      <h3>
+      <div className="flexbox">
         <button className="button back config" onClick={onClick}>
-          Configure links
+            Configure links
         </button>
-        Important Links
-      </h3>
+        <h3>
+          Important Links
+        </h3>
+      </div>
       <a
         className="App-link"
         href={snowflakeLink}
@@ -136,12 +138,14 @@ function AppBodyConfig({ onClick, snowflakeLink, setSnowflakeLink,
 
   return (
     <body className="App-body links">
-      <h3>
+      <div className="flexbox Flex-config">
         <button className="button back config" onClick={onClick}>
-          Back
+            Back
         </button>
-        Configure Links
-      </h3>
+        <h3>
+          Configure Links
+        </h3>
+      </div>
       <form method="post" onSubmit={handleSubmit}>
         <label>
           Snowflake Console: <input name="Snowflake" type="text" size="50" defaultValue={snowflakeLink}></input>
@@ -227,12 +231,14 @@ function AppBodyS3( { onClick } ) {
 
   return (
     <body className="App-body data">
-      <h3>
+      <div className="flexbox Flex-s3">
         <button className="button back" onClick={onClick}>
-        Back
+            Back
         </button>
-        S3 Bucket Upload
-      </h3>
+        <h3>
+          S3 Bucket Upload
+        </h3>
+      </div>
       <input className="button" type="file" name="file" onChange={handleFile} />
       {isFilePicked ? (
         selectedFile.name.split('.').pop() == "csv" || selectedFile.name.split('.').pop() == "xlsx" ? (
@@ -263,12 +269,14 @@ function AppBodyS3( { onClick } ) {
 function AppBodyDatagen( { onClick } ) {
   return (
     <body className="App-body data">
-      <h3>
+      <div className="flexbox Flex-datagen">
         <button className="button datagen back" onClick={onClick}>
-          Back
+            Back
         </button>
-        This is DataGen
-      </h3>
+        <h3>
+          This is DataGen
+        </h3>
+      </div>
     </body>
   )
 }

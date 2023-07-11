@@ -108,6 +108,27 @@
   /*background-color: #f0f8de;*/
 }
 
+.flexbox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100vh;
+  column-gap: 14.5vh;
+}
+
+.Flex-config {
+  column-gap: 24.84vh;
+}
+
+.Flex-s3 {
+  column-gap: 21vh;
+}
+
+.Flex-datagen {
+  column-gap: 25vh;
+}
+
 /*
 @keyframes App-logo-spin {
   from {

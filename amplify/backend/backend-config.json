@@ -15,20 +15,6 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync"
-    },
-    "s3tosnowflake": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "s3tosnowapi"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
     }
   },
   "auth": {
@@ -57,32 +43,7 @@
       "service": "Cognito"
     }
   },
-  "function": {
-    "s3tosnowapi": {
-      "build": true,
-      "dependsOn": [],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    }
-  },
-  "parameters": {
-    "AMPLIFY_function_s3tosnowapi_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "s3tosnowapi"
-        }
-      ]
-    },
-    "AMPLIFY_function_s3tosnowapi_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "s3tosnowapi"
-        }
-      ]
-    }
-  },
+  "function": {},
   "storage": {
     "s3a122f770": {
       "dependsOn": [],

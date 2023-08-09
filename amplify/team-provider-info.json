@@ -34,17 +34,10 @@
         "mllaunchpage0889afea": {}
       },
       "api": {
-        "mllaunchpage": {},
-        "s3tosnowflake": {}
+        "mllaunchpage": {}
       },
       "storage": {
         "s3a122f770": {}
-      },
-      "function": {
-        "s3tosnowapi": {
-          "deploymentBucketName": "amplify-mllaunchpage-dev-114641-deployment",
-          "s3Key": "amplify-builds/s3tosnowapi-30384d696445796c7138-build.zip"
-        }
       }
     }
   }

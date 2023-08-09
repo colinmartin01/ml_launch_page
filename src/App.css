@@ -8,7 +8,7 @@
 
 .App-logo {
   height: 7vmin;
-  background-color: white;
+  background-color: #ffffff;
   pointer-events: none;
 }
 
@@ -42,7 +42,8 @@
 }
 
 .Logo-header {
-  background-color: #3a3c4f;
+  background-color: #070f57;
+  /*background-color: #3a3c4f;*/
   min-height: 9vh;
   display: flex;
   flex-direction: column;
@@ -70,13 +71,19 @@
   background-color: #ffd500;
 }
 
+.config {
+  background-color: red;
+  /*background-color: #9235e8;*/
+}
+
 .back {
   padding: 10px 21px;
   text-align: left;
 }
 
-.config {
-  background-color: #9235e8;
+.G-button {
+  border-radius: 25px;
+  font-size: 20px
 }
 
 /* App-body parent style */
@@ -92,19 +99,47 @@
 
 /* App-body children */
 
+.welcome {
+  line-height: 1;
+  background: url("launch_page_background_white.png");
+  background-size: contain;
+  /*background-color: #dee0f8;*/
+  min-height: 60vh;
+}
+
+.Welcome-text {
+  font-size: 25px;
+}
+
+.Welcome-title {
+  padding-top: 100px;
+}
+
+.gateway {
+  justify-content: center;
+}
+
+.G-links {
+  background-color: #f9f9f9;
+  min-height: 20vh;
+}
+
 .header {
-  background: url("launch_page_background.png");
+  background: url("launch_page_background_white.png");
   background-size: contain;
   /*background-color: #dee0f8;*/
   min-height: 25vh;
 }
 
 .links {
-  background-color: #dee0f8;
+  /*background-color: #dee0f8;*/
+  background-color: #f9f9f9;
+  min-height: 50vh;
 }
 
 .data {
-  background-color: #d5d9ff;
+  background-color: #ffffff;
+  /*background-color: #d5d9ff;*/
   /*background-color: #f0f8de;*/
 }
 
@@ -122,15 +157,25 @@
 }
 
 .Flex-s3 {
-  column-gap: 21vh;
+  column-gap: 5vh;
 }
 
 .Flex-datagen {
   column-gap: 25vh;
 }
 
+.Flex-links {
+  column-gap: 7vh;
+}
+
+.SageMaker-links {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
 /*
-@keyframes App-logo-spin {
+@keyframes App-logo-spin {y
   from {
     transform: rotate(0deg);
   }

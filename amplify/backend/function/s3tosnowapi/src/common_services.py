@@ -119,7 +119,7 @@ class SnowflakeExecutor:
             raise Exception(message)
 
     def execute(self, sql_path=None, sql_txt=None, sql_params=None,
-                snowflake_parameters=None, fail_statements=None):
+                snowflake_parameters=None, fail_statements=None, file=None):
         """ Executes sql in Snowflake. Must pass either the sql path or
                 sql text directly.
 
@@ -138,6 +138,8 @@ class SnowflakeExecutor:
         with closing(self._get_conn()) as conn:
             with closing(conn.cursor()) as cs:
                 for query in sql:
+                    #if query == "SET filename = 'file'":
+                    #    query = "SET filename = " + "'" + file + "'"
                     print('Executing: {sql}'.format(sql=query))
                     cs.execute(query, snowflake_parameters)
 

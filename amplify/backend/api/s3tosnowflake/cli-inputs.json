@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/s3tosnowflake": {
+      "name": "/s3tosnowflake",
+      "lambdaFunction": "s3tosnowapi",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

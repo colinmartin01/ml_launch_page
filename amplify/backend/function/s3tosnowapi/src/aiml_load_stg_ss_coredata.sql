@@ -1,8 +1,7 @@
 USE ROLE AIML_ROLE;
 USE DATABASE AIML_DB;
 USE SCHEMA AIML_DEV;
-
-put file://C:\GitHub_Local_Repository\AIML\AppsAssoc_DEV_DataGen_002_Python-Faker\data_results\base\COREDATA2_base.csv @my_csv_stage auto_compress=true;
+SET filename = 'file';
 
 create or replace table stg_ss_coredata copy grants (
   Period date,
@@ -14,6 +13,7 @@ create or replace table stg_ss_coredata copy grants (
   Orders_Returned number(38,0),
   Forecast01 number(38,0),
   Forecast02 number(38,0),
+  Forecast03 number(38,0),
   Inventory_starting number(38,0),
   Inventory_capacity number(38,0),
   Inventory_production number(38,0),
@@ -31,11 +31,18 @@ create or replace table stg_ss_coredata copy grants (
   Trend_factor4 varchar(100),
   Trend_factor5 varchar(100),
   Last_Period   varchar(100),
-  Last_X_Value	varchar(100)
-
+  Last_X_Value	varchar(100),
+  Last_Y_Value	varchar(100)
 );
 
-copy into AIML_DB.AIML_DEV.STG_SS_COREDATA
-  from @my_csv_stage/COREDATA2_base.csv.gz
-  file_format = (format_name = FF_CSV_FORMAT)
+create or replace file format col_mismatch
+  skip_header = 1
+  error_on_column_count_mismatch = false;
+
+copy into AIML_DB.AIML_DEV.STG_SS_COREDATA_AGG
+  from s3://mllaunchbucket114641-dev/public credentials=(AWS_KEY_ID='AKIAVLW57Z3HLJU43FUH' AWS_SECRET_KEY='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')
+  --pattern = filename
+  --files = [2023-06-19 8_44am_csv.csv]
+  force = true
+  file_format = col_mismatch
   on_error = 'skip_file';

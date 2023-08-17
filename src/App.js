@@ -25,7 +25,7 @@ function App() {
   const [config, setConfig] = useState(false);
   const [steps, setSteps] = useState(false);
   const [links, setLinks] = useState(false);
-  const [welcome, setWelcome] = useState(false);
+  const [welcome, setWelcome] = useState(true);
 
   const [step1, setStep1] = useState(false);
   const [step2, setStep2] = useState(false);
@@ -72,6 +72,8 @@ function App() {
       <LogoHeader />
 
       { welcome ? (
+        <Welcome onClick={toggleWelcome}/>
+      ) : (
         <div>
 
           <TitleHeader />
@@ -107,8 +109,6 @@ function App() {
           )}
 
         </div>
-      ) : (
-        <Welcome onClick={toggleWelcome}/>
       )}
 
     </div>
@@ -120,7 +120,7 @@ export default App;
 
 // ML Steps with DataGen
 /*
-{mlSteps ? (
+{steps ? (
   step1 ? (
   <DataS3 goBack={toggleStep1} moveForward={toggleStep2}/>
   ) : datagen ? (
@@ -129,7 +129,7 @@ export default App;
     <BodyData
      s3OnClick={toggleStep1} datagenOnClick={handleDatagen}/>
   )) : (
-    <MLGateway onClick={toggleMlGateway}/>
+    <StepsGateway onClick={toggleStepsGateway}/>
 )}
 */
 

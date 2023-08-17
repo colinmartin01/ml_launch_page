@@ -38,16 +38,6 @@ export default function UploadData( { goBack, goForward } ) {
     // On submission await upload to S3 bucket
     async function handleSubmit(e) {
       try {
-        // Delete all current items in bucket
-        // Warning: Will cause no file upload if trying to upload file that already exists in bucket
-        /*
-        Storage.list('')
-          .then((response) => {
-            response.results.forEach(obj => {
-              Storage.remove(obj.key)
-          })
-        });
-        */
         await Storage.put(selectedFile.name, selectedFile, {
           progressCallback(progress) {
             console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
@@ -60,7 +50,14 @@ export default function UploadData( { goBack, goForward } ) {
         }
         catch (error) {
             console.log("Error posting to Python: ", error);
-        }
+        };
+        // Delete all current items in bucket
+        Storage.list('')
+          .then((response) => {
+            response.results.forEach(obj => {
+              Storage.remove(obj.key)
+          })
+        });
       } catch (error) {
         console.log("Error uploading file: ", error);
       }
